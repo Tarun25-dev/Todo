@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import todoRoutes from "./routes/todos.js";
 
 dotenv.config(); // is used to load environment variables from a .env file into your application.
 
@@ -12,6 +13,7 @@ app.use(cors({origin: "http://localhost:5173"}));
 // If the backend doesn't permit it, the browser blocks the frontend from accessing the response.
 
 app.use(express.json());
+app.use("/api/todos", todoRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
