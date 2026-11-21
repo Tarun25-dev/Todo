@@ -26,6 +26,7 @@ router.post("/", (req, res) => {
     const todo: Todo = { id: nextId++, title: title.trim(), done: false }
     todos.push(todo);
     res.status(201).json(todo);
+    console.log(todo);
 });
 
 router.patch("/:id", (req, res) => {
