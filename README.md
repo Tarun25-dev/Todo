@@ -45,4 +45,16 @@ PORT=5000
 ```bash
 npm run dev
 ```
+The server runs at `http:localhost:5000`.
+
+## API Endpoints
+
+Base URL: `/api/todos`
+
+|Method|Endpoint|Description|Body|
+|------|--------|-----------|----|
+|GET|`/api/todos`|Get all todos|-|
+|POST|`/api/todos`|Create a todo|`{"title": "string"}`|
+|PATCH|`/api/todos/:id`|Update title or done status|`{"title"?: "string", "done"?: "boolean"}`|
+|DELETE|`/api/todos/:id`|Delete a todo|-|
 
