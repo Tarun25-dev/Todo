@@ -21,3 +21,15 @@ server/
 ├── package.json
 └── tsconfig.json
 ```
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18 or later
+
+### Installation
+```bash
+cd server
+npm install
+```
+
