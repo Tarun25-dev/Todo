@@ -33,3 +33,16 @@ cd server
 npm install
 ```
 
+### Environment Variables
+
+Create a `.env` file in `server/`:
+```bash
+PORT=5000
+```
+
+### Run in Development
+
+```bash
+npm run dev
+```
+
