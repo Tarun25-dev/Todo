@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { isValidObjectId } from "mongoose";
+import Todo from "../models/todo.js";
 
 interface Todo{
     id: number;
@@ -8,50 +10,57 @@ interface Todo{
 
 const router = Router();
 
-let todos: Todo [] = [];
-let nextId = 1;
-
-
 // GET /api/todos
-router.get("/", (req, res) => {
+router.get("/", async (_req, res) => {
+    const todos = await Todo.find().sort({ _id: 1});
     res.json(todos);
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     const {title} = req.body;
     if(typeof title !== "string" || !title.trim()){
         res.status(400).json({message: "Title is required!"});
         return;
     }
-    const todo: Todo = { id: nextId++, title: title.trim(), done: false }
-    todos.push(todo);
+    const todo = await Todo.create({title});
     res.status(201).json(todo);
-    console.log(todo);
 });
 
-router.patch("/:id", (req, res) => {
-    const todo = todos.find((t) => String(t.id) === req.params.id);
-    if(!todo){
+router.patch("/:id", async (req, res) => {
+    const {id} = req.params;
+    if(!isValidObjectId(id)){
         res.status(404).json({ message: "Todo not found"});
         return;
     }
     const {title, done} = req.body;
+    const update: {title?: string; done?: boolean } = {};
+
     if(typeof title === "string" && title.trim()){
-        todo.title = title.trim();
+        update.title = title.trim();
     }
     if(typeof done === "boolean"){
-        todo.done = true;
+        update.done = done;
+    }
+
+    const todo = await Todo.findByIdAndUpdate(id, update, { new: true });
+    if(!todo){
+        res.status(404).json({ message: "Todo not found"});
+        return;
     }
     res.json(todo);
 });
 
-router.delete("/:id", (req, res) => {
-    const index = todos.findIndex((t) => String(t.id) === req.params.id);
-    if(index === -1){
+router.delete("/:id", async(req, res) => {
+    const {id} = req.params;
+    if(!isValidObjectId(id)){
         res.status(404).json({message: "Todo not found"});
         return;
     }
-    todos.splice(index, 1);
+    const todo = await Todo.findByIdAndDelete(id);
+    if(!todo){
+        res.status(404).json({ message: "Todo not found" });
+        return
+    }
     res.status(204).send();
 });
 
