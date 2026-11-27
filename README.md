@@ -58,3 +58,12 @@ Base URL: `/api/todos`
 |PATCH|`/api/todos/:id`|Update title or done status|`{"title"?: "string", "done"?: "boolean"}`|
 |DELETE|`/api/todos/:id`|Delete a todo|-|
 
+### Todo Object
+
+```json
+{
+"id": "1",
+"title": "Learn express",
+"done": false
+}
+```
