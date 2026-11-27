@@ -67,3 +67,13 @@ Base URL: `/api/todos`
 "done": false
 }
 ```
+
+### Status Codes
+
+|Code|Meaning|
+|----|-------|
+|200|Success|
+|201|Todo created|
+|204|Todo deleted (no content)|
+|400|Invalid input (missing title)|
+|404|Todo not found|
